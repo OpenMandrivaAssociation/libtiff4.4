@@ -24,6 +24,7 @@ Patch2:		tiff-3.8.2-goo-sec.diff
 BuildRequires:	libjpeg-devel
 BuildRequires:	zlib-devel
 BuildRequires:	chrpath
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 The libtiff package contains a library of functions for manipulating TIFF
