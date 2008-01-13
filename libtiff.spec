@@ -1,7 +1,7 @@
 %define name	libtiff
 %define	version	3.8.2
 %define	picver	3.8.0
-%define release %mkrel 8
+%define release %mkrel 9
 
 %define lib_version	3.8.2
 %define lib_major	3
