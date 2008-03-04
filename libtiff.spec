@@ -1,7 +1,6 @@
 %define name	libtiff
 %define	version	3.8.2
 %define	picver	3.8.0
-%define release %mkrel 9
 
 %define lib_version	3.8.2
 %define lib_major	3
@@ -11,7 +10,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		%{name}
 Version:	%{version}
-Release:	%{release}
+Release:	%mkrel 10
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.libtiff.org/
