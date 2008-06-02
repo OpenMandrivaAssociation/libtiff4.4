@@ -100,7 +100,7 @@ find . -type 'd' -name 'CVS' | xargs rm -fr
 	--includedir=%{_includedir} \
         --libdir=%{_libdir} \
         --libexecdir=%{_libdir} \
-        --localstatedir=%{_localstatedir} \
+        --localstatedir=%{_localstatedir}/lib \
         --mandir=%{_mandir} \
         --infodir=%{_infodir}
 
