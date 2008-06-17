@@ -10,7 +10,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		%{name}
 Version:	%{version}
-Release:	%mkrel 10
+Release:	%mkrel 11
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.libtiff.org/
