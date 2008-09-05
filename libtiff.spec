@@ -10,7 +10,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		%{name}
 Version:	%{version}
-Release:	%mkrel 11
+Release:	%mkrel 12
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.libtiff.org/
@@ -19,11 +19,11 @@ Source1:	ftp://ftp.remotesensing.org/pub/libtiff/pics-%{picver}.tar.bz2
 Patch0:		tiffsplit-overflow.patch
 Patch1:		tiff.tiff2pdf-octal-printf.patch
 Patch2:		tiff-3.8.2-goo-sec.diff
-
+Patch3:		libtiff-3.8.2-lzw-bugs.patch
 BuildRequires:	libjpeg-devel
 BuildRequires:	zlib-devel
 BuildRequires:	chrpath
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 The libtiff package contains a library of functions for manipulating TIFF
@@ -85,6 +85,7 @@ ln -s pics-* pics
 %patch0 -p1 -b .cve-2006-2656
 %patch1 -p1 -b .cve-2006-2193
 %patch2 -p1 -b .cve-2006-3459-thru-3465
+%patch3 -p1 -b .cve-2008-2327
 
 %build
 find . -type 'd' -name 'CVS' | xargs rm -fr
