@@ -10,7 +10,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		%{name}
 Version:	%{version}
-Release:	%mkrel 12
+Release:	%mkrel 13
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.libtiff.org/
@@ -20,6 +20,7 @@ Patch0:		tiffsplit-overflow.patch
 Patch1:		tiff.tiff2pdf-octal-printf.patch
 Patch2:		tiff-3.8.2-goo-sec.diff
 Patch3:		libtiff-3.8.2-lzw-bugs.patch
+Patch4:		tiff-3.8.2-format_not_a_string_literal_and_no_format_arguments.diff
 BuildRequires:	libjpeg-devel
 BuildRequires:	zlib-devel
 BuildRequires:	chrpath
@@ -86,10 +87,16 @@ ln -s pics-* pics
 %patch1 -p1 -b .cve-2006-2193
 %patch2 -p1 -b .cve-2006-3459-thru-3465
 %patch3 -p1 -b .cve-2008-2327
+%patch4 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 
 %build
 find . -type 'd' -name 'CVS' | xargs rm -fr
 %{?__cputoolize: %{__cputoolize}}
+
+export LDFLAGS="`rpm --eval %%configure|grep LDFLAGS|cut -d\\" -f2|sed -e 's/\$LDFLAGS //'`"
+export CFLAGS="%{optflags}"
+export CXXFLAGS="%{optflags}" 
+
 ./configure \
 	--with-GCOPTS="$RPM_OPT_FLAGS" \
 	--prefix=%{_prefix} \
