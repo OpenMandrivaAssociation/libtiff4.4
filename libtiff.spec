@@ -10,7 +10,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		%{name}
 Version:	%{version}
-Release:	%mkrel 14
+Release:	%mkrel 15
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.libtiff.org/
@@ -22,6 +22,8 @@ Patch2:		tiff-3.8.2-goo-sec.diff
 Patch3:		libtiff-3.8.2-lzw-bugs.patch
 Patch4:		tiff-3.8.2-format_not_a_string_literal_and_no_format_arguments.diff
 Patch5:		tiff-3.8.2-mdvbz50788.diff
+Patch6:		tiff-3.8.2-CVE-2009-2285.patch
+Patch7:		tiff-3.8.2-CVE-2009-2347.patch
 BuildRequires:	libjpeg-devel
 BuildRequires:	zlib-devel
 BuildRequires:	chrpath
@@ -90,6 +92,8 @@ ln -s pics-* pics
 %patch3 -p1 -b .cve-2008-2327
 %patch4 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 %patch5 -p0 -b .mdvbz50788
+%patch6 -p1 -b .CVE-2009-2285
+%patch7 -p1 -b .CVE-2009-2347
 
 # cleanup
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
@@ -108,7 +112,8 @@ export CXXFLAGS="%{optflags}"
 
 %make
 
-make test
+%check
+make check
 
 %install
 rm -rf %{buildroot}
