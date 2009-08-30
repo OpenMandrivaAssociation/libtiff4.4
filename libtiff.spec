@@ -6,7 +6,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	3.9.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.libtiff.org/
@@ -51,7 +51,6 @@ and they are often quite large.
 Summary:	Development tools for programs which will use the libtiff library
 Group:		Development/C
 Requires:	%{libname} = %{version}
-Obsoletes:	%{name}-devel
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	tiff-devel = %{version}-%{release}
 
