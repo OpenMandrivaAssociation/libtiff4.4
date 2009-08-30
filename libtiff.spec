@@ -6,7 +6,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	3.9.1
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.libtiff.org/
@@ -53,6 +53,7 @@ Group:		Development/C
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	tiff-devel = %{version}-%{release}
+Obsoletes:	%{mklibname tiff 3 -d}
 
 %description -n	%{develname}
 This package contains the header files and .so libraries for developing
@@ -65,6 +66,7 @@ Group:		Development/C
 Requires:	%{develname} = %{version}
 Provides:	%{name}-static-devel = %{version}-%{release}
 Provides:	tiff-static-devel = %{version}-%{release}
+Obsoletes:	%{mklibname tiff 3 -d -s}
 
 %description -n	%{staticdevelname}
 This package contains the static libraries for developing
