@@ -5,13 +5,12 @@
 
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
-Version:	3.9.1
-Release:	%mkrel 4
+Version:	3.9.2
+Release:	%mkrel 1
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.remotesensing.org/libtiff/
 Source0:	ftp://ftp.remotesensing.org/pub/libtiff/tiff-%{version}.tar.gz
-Patch0:		tiff-3.8.2-format_not_a_string_literal_and_no_format_arguments.diff
 Patch1:		tiff-3.9.1-no_contrib.diff
 BuildRequires:	jbig-devel
 BuildRequires:	libjpeg-devel
@@ -76,7 +75,6 @@ library.
 %prep
 
 %setup -q -n tiff-%{version}
-%patch0 -p1 -b .format_not_a_string_literal_and_no_format_arguments
 %patch1 -p1
 
 # cleanup
