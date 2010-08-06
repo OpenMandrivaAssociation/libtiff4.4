@@ -6,12 +6,19 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	3.9.4
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.remotesensing.org/libtiff/
 Source0:	ftp://ftp.remotesensing.org/pub/libtiff/tiff-%{version}.tar.gz
 Patch1:		tiff-3.9.1-no_contrib.diff
+Patch2:		libtiff-ycbcr-clamp.patch
+Patch3:		libtiff-3samples.patch
+Patch4:		libtiff-subsampling.patch
+Patch5:		libtiff-tiffdump.patch
+Patch6:		tiff-3.9.1-CVE-2010-2233.diff
+Patch7:		libtiff-unknown-fix.patch
+Patch8:		tiff-3.9.1-CVE-2010-2482.diff
 BuildRequires:	jbig-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	mesaglut-devel
@@ -76,6 +83,13 @@ library.
 
 %setup -q -n tiff-%{version}
 %patch1 -p1
+%patch2 -p1 -b .CVE-2010-2595
+%patch3 -p1 -b .CVE-2010-2483
+%patch4 -p1 -b .CVE-2010-2597
+%patch5 -p1 -b .tiffdump
+%patch6 -p1 -b .CVE-2010-2233
+%patch7 -p1 -b .unknown-fix
+%patch8 -p1 -b .CVE-2010-2482
 
 # cleanup
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
