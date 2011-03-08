@@ -6,7 +6,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	3.9.4
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.remotesensing.org/libtiff/
@@ -21,6 +21,8 @@ Patch7:		libtiff-unknown-fix.patch
 Patch8:		tiff-3.9.1-CVE-2010-2482.diff
 Patch9:		tiff-3.9.2-CVE-2010-3087.diff
 Patch10:	tiff-3.9.2-libjpeg7+.diff
+Patch11:	libtiff-CVE-2011-0192.patch
+Patch12:	libtiff-gif2tiff-overrun.patch
 BuildRequires:	jbig-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	mesaglut-devel
@@ -94,11 +96,22 @@ library.
 %patch8 -p1 -b .CVE-2010-2482
 %patch9 -p1 -b .CVE-2010-3087
 %patch10 -p0 -b .libjpeg7
+%patch11 -p1 -b .CVE-2011-0192
+%patch12 -p1 -b .gif2tiff-overrun
 
 # cleanup
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
     if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
 done
+
+# Use build system's libtool.m4, not the one in the package.
+rm -f libtool.m4
+
+libtoolize --force  --copy
+aclocal -I . -I m4
+automake --add-missing --copy
+autoconf
+autoheader
 
 %build
 export LDFLAGS="%{ldflags}"
@@ -110,7 +123,7 @@ export CXXFLAGS="%{optflags}"
 %make
 
 %check
-make check
+LD_LIBRARY_PATH=$PWD:$LD_LIBRARY_PATH make check
 
 %install
 rm -rf %{buildroot}
