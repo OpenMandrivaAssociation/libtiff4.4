@@ -6,7 +6,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	3.9.5
-Release:	%mkrel 1
+Release:	2
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.remotesensing.org/libtiff/
@@ -14,11 +14,11 @@ Source0:	ftp://ftp.remotesensing.org/pub/libtiff/tiff-%{version}.tar.gz
 Patch1:		tiff-3.9.1-no_contrib.diff
 Patch10:	tiff-3.9.2-libjpeg7+.diff
 Patch11:	tiff-3.9.1-CVE-2011-0191.diff
+BuildRequires:	autoconf automake libtool m4
 BuildRequires:	jbig-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	mesaglut-devel
 BuildRequires:	zlib-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 The libtiff package contains a library of functions for manipulating TIFF
@@ -58,19 +58,6 @@ Obsoletes:	%{mklibname tiff 3 -d}
 
 %description -n	%{develname}
 This package contains the header files and .so libraries for developing
-programs which will manipulate TIFF format image files using the libtiff
-library.
-
-%package -n	%{staticdevelname}
-Summary:	Static libraries for programs which will use the libtiff library
-Group:		Development/C
-Requires:	%{develname} = %{version}
-Provides:	%{name}-static-devel = %{version}-%{release}
-Provides:	tiff-static-devel = %{version}-%{release}
-Obsoletes:	%{mklibname tiff 3 -d -s}
-
-%description -n	%{staticdevelname}
-This package contains the static libraries for developing
 programs which will manipulate TIFF format image files using the libtiff
 library.
 
@@ -122,36 +109,19 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 # multiarch policy
 %multiarch_includes %{buildroot}%{_includedir}/tiffconf.h
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
+# cleanup
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %files progs
-%defattr(-,root,root,-)
 %{_bindir}/*
 %{_mandir}/man1/*
 
 %files -n %{libname}
-%defattr(-,root,root,-)
 %{_libdir}/*.so.*
 
 %files -n %{develname}
-%defattr(-,root,root,755)
 %doc installed_docs/*
 %{_includedir}/*.h*
 %{multiarch_includedir}/tiffconf.h
-%{_libdir}/*.la
 %{_libdir}/*.so
 %{_mandir}/man3/*
-
-%files -n %{staticdevelname}
-%defattr(-,root,root,-)
-%doc COPYRIGHT README TODO VERSION
-%{_libdir}/*.a
