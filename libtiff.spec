@@ -1,19 +1,17 @@
-%define major 3
+%define major 5
 %define libname %mklibname tiff %{major}
 %define develname %mklibname tiff -d
 %define staticdevelname %mklibname tiff -d -s
 
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
-Version:	3.9.5
-Release:	2
+Version:	4.0.0
+Release:	1
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.remotesensing.org/libtiff/
 Source0:	ftp://ftp.remotesensing.org/pub/libtiff/tiff-%{version}.tar.gz
 Patch1:		tiff-3.9.1-no_contrib.diff
-Patch10:	tiff-3.9.2-libjpeg7+.diff
-Patch11:	tiff-3.9.1-CVE-2011-0191.diff
 BuildRequires:	autoconf automake libtool m4
 BuildRequires:	jbig-devel
 BuildRequires:	libjpeg-devel
@@ -30,8 +28,6 @@ and they are often quite large.
 Summary:	Binaries needed to manipulate TIFF format image files
 Group:		Graphics
 Requires:	%{libname} = %{version}
-Obsoletes:	libtiff3-progs
-Provides:	libtiff3-progs = %{version}-%{release}
 
 %description	progs
 This package provides binaries needed to manipulate TIFF format image files.
@@ -39,8 +35,6 @@ This package provides binaries needed to manipulate TIFF format image files.
 %package -n	%{libname}
 Summary:	A library of functions for manipulating TIFF format image files
 Group:		System/Libraries
-Obsoletes:	%{name}
-Provides:	%{name} = %{version}-%{release}
 
 %description -n	%{libname}
 The libtiff package contains a library of functions for manipulating TIFF
@@ -65,8 +59,6 @@ library.
 
 %setup -q -n tiff-%{version}
 %patch1 -p1
-%patch10 -p0 -b .libjpeg7
-%patch11 -p0 -b .CVE-2011-0191
 
 # cleanup
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
@@ -88,6 +80,11 @@ export CFLAGS="%{optflags}"
 export CXXFLAGS="%{optflags}"
 
 %configure2_5x
+
+# the "JPEG 8/12 bit dual mode" is too messy..., maybe later?
+# http://trac.osgeo.org/gdal/wiki/TIFF12BitJPEG
+# --with-jpeg12-include-dir=
+# --with-jpeg12-lib=
 
 %make
 
@@ -117,11 +114,12 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_mandir}/man1/*
 
 %files -n %{libname}
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
 %doc installed_docs/*
 %{_includedir}/*.h*
 %{multiarch_includedir}/tiffconf.h
 %{_libdir}/*.so
+%{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*
