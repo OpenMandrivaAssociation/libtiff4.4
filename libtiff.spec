@@ -14,8 +14,8 @@ Source0:	ftp://ftp.remotesensing.org/pub/libtiff/tiff-%{version}.tar.gz
 Patch1:		tiff-3.9.1-no_contrib.diff
 BuildRequires:	autoconf automake libtool m4
 BuildRequires:	jbig-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	mesaglut-devel
+BuildRequires:	jpeg-devel
+BuildRequires:	pkgconfig(glut)
 BuildRequires:	zlib-devel
 
 %description
