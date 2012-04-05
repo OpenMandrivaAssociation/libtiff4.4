@@ -6,12 +6,13 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	4.0.1
-Release:	1
+Release:	2
 License:	BSD-like
 Group:		System/Libraries
 URL:		http://www.remotesensing.org/libtiff/
 Source0:	ftp://ftp.remotesensing.org/pub/libtiff/tiff-%{version}.tar.gz
 Patch1:		tiff-3.9.1-no_contrib.diff
+Patch2:		tiff-4.0.1-CVE-2012-1173.diff
 BuildRequires:	autoconf automake libtool m4
 BuildRequires:	jbig-devel
 BuildRequires:	jpeg-devel
@@ -59,6 +60,7 @@ library.
 
 %setup -q -n tiff-%{version}
 %patch1 -p1
+%patch2 -p1 -b .CVE-2012-1173
 
 # cleanup
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
