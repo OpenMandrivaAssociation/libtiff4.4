@@ -73,6 +73,7 @@ aclocal -I . -I m4
 automake --add-missing --copy
 autoconf
 autoheader
+autoreconf -fi
 
 %build
 export LDFLAGS="%{ldflags}"
