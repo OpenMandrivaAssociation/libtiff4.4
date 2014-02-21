@@ -2,6 +2,7 @@
 %define libname	%mklibname tiff %{major}
 %define libxx	%mklibname tiffxx %{major}
 %define devname	%mklibname tiff -d
+%bcond_without bootstrap
 
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
@@ -15,7 +16,9 @@ Patch1:		tiff-3.9.1-no_contrib.diff
 BuildRequires:	libtool
 BuildRequires:	jbig-devel
 BuildRequires:	jpeg-devel
+%if %{with bootstrap}
 BuildRequires:	pkgconfig(glut)
+%endif
 BuildRequires:	pkgconfig(zlib)
 
 %description
