@@ -16,7 +16,7 @@ Patch1:		tiff-3.9.1-no_contrib.diff
 BuildRequires:	libtool
 BuildRequires:	jbig-devel
 BuildRequires:	jpeg-devel
-%if %{with bootstrap}
+%if !%{with bootstrap}
 BuildRequires:	pkgconfig(glut)
 %endif
 BuildRequires:	pkgconfig(zlib)
