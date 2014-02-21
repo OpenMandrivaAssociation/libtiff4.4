@@ -2,7 +2,7 @@
 %define libname	%mklibname tiff %{major}
 %define libxx	%mklibname tiffxx %{major}
 %define devname	%mklibname tiff -d
-%bcond_without bootstrap
+%bcond_with bootstrap
 
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
