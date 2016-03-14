@@ -1,13 +1,13 @@
-%define major	5
-%define libname	%mklibname tiff %{major}
-%define libxx	%mklibname tiffxx %{major}
-%define devname	%mklibname tiff -d
+%define major 5
+%define libname %mklibname tiff %{major}
+%define libxx %mklibname tiffxx %{major}
+%define devname %mklibname tiff -d
 %bcond_with bootstrap
 
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
-Version:	4.0.3
-Release:	14
+Version:	4.0.6
+Release:	1
 License:	BSD-like
 Group:		System/Libraries
 Url:		http://www.remotesensing.org/libtiff/
@@ -83,7 +83,7 @@ export LDFLAGS="%{ldflags}"
 export CFLAGS="%{optflags} -fno-strict-aliasing"
 export CXXFLAGS="%{optflags}"
 
-%configure2_5x \
+%configure \
 	--disable-static \
 	--enable-ld-version-script
 
@@ -121,4 +121,3 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*
-
