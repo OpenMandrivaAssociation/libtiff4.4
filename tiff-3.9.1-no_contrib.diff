@@ -1,24 +1,24 @@
-diff -Naur tiff-4.0.0/Makefile.am tiff-4.0.0.oden/Makefile.am
---- tiff-4.0.0/Makefile.am	2010-11-27 15:46:34.000000000 -0500
-+++ tiff-4.0.0.oden/Makefile.am	2011-12-22 04:06:52.579458633 -0500
-@@ -48,7 +48,7 @@
- 
- dist_doc_DATA = $(docfiles)
+diff -Naur tiff-4.0.6/Makefile.am tiff-4.0.6.tpg/Makefile.am
+--- tiff-4.0.6/Makefile.am	2015-09-06 19:30:46.000000000 +0000
++++ tiff-4.0.6.tpg/Makefile.am	2016-03-14 21:38:18.300007836 +0000
+@@ -61,7 +61,7 @@
+ 	rm -rf $(distdir)/_build/cmake
+ 	rm -rf $(distdir)/_inst/cmake
  
 -SUBDIRS = port libtiff tools build contrib test man html
 +SUBDIRS = port libtiff tools build test man html
  
  release:
  	(rm -f $(top_srcdir)/RELEASE-DATE && echo $(LIBTIFF_RELEASE_DATE) > $(top_srcdir)/RELEASE-DATE)
-diff -Naur tiff-4.0.0/Makefile.in tiff-4.0.0.oden/Makefile.in
---- tiff-4.0.0/Makefile.in	2011-12-21 19:21:34.000000000 -0500
-+++ tiff-4.0.0.oden/Makefile.in	2011-12-22 04:07:15.298457339 -0500
-@@ -329,7 +329,7 @@
- 	libtiff-4.pc.in
+diff -Naur tiff-4.0.6/Makefile.in tiff-4.0.6.tpg/Makefile.in
+--- tiff-4.0.6/Makefile.in	2015-09-12 19:48:44.000000000 +0000
++++ tiff-4.0.6.tpg/Makefile.in	2016-03-14 21:38:32.640386664 +0000
+@@ -435,7 +435,7 @@
+ 	nmake.opt
  
  dist_doc_DATA = $(docfiles)
 -SUBDIRS = port libtiff tools build contrib test man html
 +SUBDIRS = port libtiff tools build test man html
  pkgconfigdir = $(libdir)/pkgconfig
  pkgconfig_DATA = libtiff-4.pc
- all: all-recursive
+ 
