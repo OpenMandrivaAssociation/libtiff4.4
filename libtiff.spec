@@ -6,7 +6,7 @@
 
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
-Version:	4.0.7
+Version:	4.0.8
 Release:	1
 License:	BSD-like
 Group:		System/Libraries
@@ -101,9 +101,6 @@ rm -rf installed_docs
 install -m0644 libtiff/tiffiop.h %{buildroot}%{_includedir}/
 install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 
-# multiarch policy
-%multiarch_includes %{buildroot}%{_includedir}/tiffconf.h
-
 %files progs
 %{_bindir}/*
 %{_mandir}/man1/*
@@ -117,7 +114,6 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 %files -n %{devname}
 %doc installed_docs/*
 %{_includedir}/*.h*
-%{multiarch_includedir}/tiffconf.h
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*
