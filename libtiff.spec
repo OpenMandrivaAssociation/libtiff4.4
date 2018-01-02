@@ -101,6 +101,10 @@ rm -rf installed_docs
 install -m0644 libtiff/tiffiop.h %{buildroot}%{_includedir}/
 install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 
+%if %{mdvver} <= 3000000
+%multiarch_includes %{buildroot}%{_includedir}/tiffconf.h
+%endif
+
 %files progs
 %{_bindir}/*
 %{_mandir}/man1/*
@@ -114,6 +118,9 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 %files -n %{devname}
 %doc installed_docs/*
 %{_includedir}/*.h*
+%if %{mdvver} <= 3000000
+%{multiarch_includedir}/tiffconf.h
+%endif
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*
