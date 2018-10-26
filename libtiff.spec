@@ -7,7 +7,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	4.0.9
-Release:	2
+Release:	3
 License:	BSD-like
 Group:		System/Libraries
 Url:		http://www.remotesensing.org/libtiff/
@@ -116,7 +116,6 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 %{_libdir}/libtiffxx.so.%{major}*
 
 %files -n %{devname}
-%doc installed_docs/*
 %{_includedir}/*.h*
 %if %{mdvver} <= 3000000
 %{multiarch_includedir}/tiffconf.h
