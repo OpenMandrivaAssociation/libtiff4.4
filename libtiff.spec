@@ -6,8 +6,8 @@
 
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
-Version:	4.0.9
-Release:	4
+Version:	4.0.10
+Release:	1
 License:	BSD-like
 Group:		System/Libraries
 Url:		http://www.remotesensing.org/libtiff/
