@@ -68,8 +68,7 @@ programs which will manipulate TIFF format image files using the libtiff
 library.
 
 %prep
-%setup -qn tiff-%{version}
-%apply_patches
+%autosetup -n tiff-%{version} -p1
 
 # cleanup
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
@@ -89,7 +88,7 @@ export CXXFLAGS="%{optflags}"
 	--disable-static \
 	--enable-ld-version-script
 
-%make
+%make_build
 
 #temporary disabled due upstream fix
 #%check
@@ -98,7 +97,7 @@ export CXXFLAGS="%{optflags}"
 %install
 mkdir -p %{buildroot}/{%{_bindir},%{_datadir}}
 rm -rf installed_docs
-%makeinstall LIBTIFF_DOCDIR=`pwd`/installed_docs
+%make_install LIBTIFF_DOCDIR=`pwd`/installed_docs
 
 install -m0644 libtiff/tiffiop.h %{buildroot}%{_includedir}/
 install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
