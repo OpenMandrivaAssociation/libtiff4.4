@@ -117,7 +117,6 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 %{_libdir}/libtiffxx.so.%{major}*
 
 %files -n %{devname}
-%{_datadir}/doc/%{devname}/*
 %{_includedir}/*.h*
 %if %{mdvver} <= 3000000
 %{multiarch_includedir}/tiffconf.h
