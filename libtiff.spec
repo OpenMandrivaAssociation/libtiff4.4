@@ -21,8 +21,14 @@ Patch1:		tiff-3.9.1-no_contrib.diff
 BuildRequires:	libtool
 BuildRequires:	jbig-devel
 BuildRequires:	jpeg-devel
-%if !%{with bootstrap}
+BuildRequires:	pkgconfig(libzstd)
+BuildRequires:	pkgconfig(liblzma)
+BuildRequires:	pkgconfig(libwebp)
+BuildRequires:	pkgconfig(ice)
+%if %{without bootstrap}
 BuildRequires:	pkgconfig(glut)
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(gl)
 %endif
 BuildRequires:	pkgconfig(zlib)
 
@@ -118,21 +124,13 @@ LDFLAGS="%{ldflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
 
 %make_build
 
-#temporary disabled due upstream fix
-#%check
-# 
-
 %install
 mkdir -p %{buildroot}/{%{_bindir},%{_datadir}}
 rm -rf installed_docs
-%make_install LIBTIFF_DOCDIR=`pwd`/installed_docs
+%make_install
 
 install -m0644 libtiff/tiffiop.h %{buildroot}%{_includedir}/
 install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
-
-%if %{mdvver} <= 3000000
-%multiarch_includes %{buildroot}%{_includedir}/tiffconf.h
-%endif
 
 %files progs
 %{_bindir}/*
@@ -146,9 +144,6 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 
 %files -n %{devname}
 %{_includedir}/*.h*
-%if %{mdvver} <= 3000000
-%{multiarch_includedir}/tiffconf.h
-%endif
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*
