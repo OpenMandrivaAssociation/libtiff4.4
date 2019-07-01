@@ -6,10 +6,13 @@
 
 %global optflags %{optflags} -O3
 
+# (tpg) enable PGO build
+%bcond_without pgo
+
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	4.0.10
-Release:	3
+Release:	4
 License:	BSD-like
 Group:		System/Libraries
 Url:		http://www.remotesensing.org/libtiff/
@@ -71,7 +74,7 @@ library.
 %autosetup -n tiff-%{version} -p1
 
 # cleanup
-for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
+for i in $(find . -type d -name CVS) $(find . -type f -name .cvs\*) $(find . -type f -name .#\*); do
     if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
 done
 
@@ -84,6 +87,31 @@ export LDFLAGS="%{ldflags}"
 export CFLAGS="%{optflags} -fno-strict-aliasing"
 export CXXFLAGS="%{optflags}"
 
+%if %{with pgo}
+export LLVM_PROFILE_FILE=%{name}-%p.profile.d
+export LD_LIBRARY_PATH="$(pwd)"
+CFLAGS="%{optflags} -fprofile-instr-generate" \
+CXXFLAGS="%{optflags} -fprofile-instr-generate" \
+FFLAGS="$CFLAGS_PGO" \
+FCFLAGS="$CFLAGS_PGO" \
+LDFLAGS="%{ldflags} -fprofile-instr-generate" \
+%configure \
+	--disable-static \
+	--enable-ld-version-script
+
+%make_build
+make check
+
+unset LD_LIBRARY_PATH
+unset LLVM_PROFILE_FILE
+llvm-profdata merge --output=%{name}.profile *.profile.d
+
+make clean
+
+CFLAGS="%{optflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
+CXXFLAGS="%{optflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
+LDFLAGS="%{ldflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
+%endif
 %configure \
 	--disable-static \
 	--enable-ld-version-script
