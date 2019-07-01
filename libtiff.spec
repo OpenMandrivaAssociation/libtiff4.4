@@ -143,6 +143,7 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 %{_libdir}/libtiffxx.so.%{major}*
 
 %files -n %{devname}
+%doc %{_docdir}/tiff-%{version}
 %{_includedir}/*.h*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
