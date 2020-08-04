@@ -10,7 +10,7 @@
 %define lib32name %mklib32name tiff %{major}
 %define lib32xx %mklib32name tiffxx %{major}
 %define dev32name %mklib32name tiff -d
-%bcond_with bootstrap
+%bcond_without bootstrap
 
 %global optflags %{optflags} -O3
 
@@ -31,12 +31,12 @@ BuildRequires:	jbig-devel
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(libzstd)
 BuildRequires:	pkgconfig(liblzma)
-BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(ice)
 %if %{without bootstrap}
 BuildRequires:	pkgconfig(glut)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(gl)
+BuildRequires:	pkgconfig(libwebp)
 %endif
 BuildRequires:	pkgconfig(zlib)
 %if %{with compat32}
