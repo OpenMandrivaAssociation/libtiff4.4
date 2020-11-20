@@ -20,7 +20,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	4.1.0
-Release:	3
+Release:	4
 License:	BSD-like
 Group:		System/Libraries
 Url:		http://www.remotesensing.org/libtiff/
@@ -85,6 +85,11 @@ Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%{libxx} = %{version}-%{release}
 Provides:	tiff-devel = %{version}-%{release}
+Requires:	pkgconfig(libzstd)
+Requires:	pkgconfig(liblzma)
+Requires:	jpeg-devel
+Requires:	pkgconfig(libjpeg)
+Requires:	pkgconfig(zlib)
 
 %description -n	%{devname}
 This package contains the header files and .so libraries for developing
