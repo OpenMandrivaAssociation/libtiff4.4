@@ -28,7 +28,7 @@ Source0:	http://download.osgeo.org/libtiff/tiff-%{version}.tar.gz
 Patch1:		tiff-3.9.1-no_contrib.diff
 BuildRequires:	libtool
 BuildRequires:	jbig-devel
-BuildRequires:	jpeg-devel
+BuildRequires:	pkgconfig(libjpeg)
 BuildRequires:	pkgconfig(libzstd)
 BuildRequires:	pkgconfig(liblzma)
 BuildRequires:	pkgconfig(ice)
@@ -87,7 +87,6 @@ Requires:	%{libxx} = %{version}-%{release}
 Provides:	tiff-devel = %{version}-%{release}
 Requires:	pkgconfig(libzstd)
 Requires:	pkgconfig(liblzma)
-Requires:	jpeg-devel
 Requires:	pkgconfig(libjpeg)
 Requires:	pkgconfig(zlib)
 
