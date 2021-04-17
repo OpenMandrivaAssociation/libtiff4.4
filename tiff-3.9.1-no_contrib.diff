@@ -1,7 +1,7 @@
-diff -Naur tiff-4.0.6/Makefile.am tiff-4.0.6.tpg/Makefile.am
---- tiff-4.0.6/Makefile.am	2015-09-06 19:30:46.000000000 +0000
-+++ tiff-4.0.6.tpg/Makefile.am	2016-03-14 21:38:18.300007836 +0000
-@@ -61,7 +61,7 @@
+diff -up tiff-4.3.0/Makefile.am.1~ tiff-4.3.0/Makefile.am
+--- tiff-4.3.0/Makefile.am.1~	2021-03-07 12:32:24.000000000 +0100
++++ tiff-4.3.0/Makefile.am	2021-04-17 03:11:22.651296572 +0200
+@@ -57,7 +57,7 @@ distcheck-hook:
  	rm -rf $(distdir)/_build/cmake
  	rm -rf $(distdir)/_inst/cmake
  
@@ -10,11 +10,11 @@ diff -Naur tiff-4.0.6/Makefile.am tiff-4.0.6.tpg/Makefile.am
  
  release:
  	(rm -f $(top_srcdir)/RELEASE-DATE && echo $(LIBTIFF_RELEASE_DATE) > $(top_srcdir)/RELEASE-DATE)
-diff -Naur tiff-4.0.6/Makefile.in tiff-4.0.6.tpg/Makefile.in
---- tiff-4.0.6/Makefile.in	2015-09-12 19:48:44.000000000 +0000
-+++ tiff-4.0.6.tpg/Makefile.in	2016-03-14 21:38:32.640386664 +0000
-@@ -435,7 +435,7 @@
- 	nmake.opt
+diff -up tiff-4.3.0/Makefile.in.1~ tiff-4.3.0/Makefile.in
+--- tiff-4.3.0/Makefile.in.1~	2021-04-17 03:11:22.651296572 +0200
++++ tiff-4.3.0/Makefile.in	2021-04-17 03:11:52.634642163 +0200
+@@ -434,7 +434,7 @@ EXTRA_DIST = \
+ 	libtiff-4.pc.in
  
  dist_doc_DATA = $(docfiles)
 -SUBDIRS = port libtiff tools build contrib test man html

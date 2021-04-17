@@ -17,14 +17,16 @@
 # (tpg) enable PGO build
 %bcond_without pgo
 
+%define beta rc1
+
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
-Version:	4.2.0
-Release:	1
+Version:	4.3.0
+Release:	%{?beta:0.%{beta}.}1
 License:	BSD-like
 Group:		System/Libraries
 Url:		http://www.remotesensing.org/libtiff/
-Source0:	http://download.osgeo.org/libtiff/tiff-%{version}.tar.gz
+Source0:	http://download.osgeo.org/libtiff/tiff-%{version}%{?beta:%{beta}}.tar.gz
 Patch1:		tiff-3.9.1-no_contrib.diff
 BuildRequires:	libtool
 BuildRequires:	jbig-devel
