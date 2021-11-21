@@ -22,7 +22,7 @@
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
 Version:	4.3.0
-Release:	%{?beta:0.%{beta}.}1
+Release:	%{?beta:0.%{beta}.}2
 License:	BSD-like
 Group:		System/Libraries
 Url:		http://www.remotesensing.org/libtiff/
@@ -56,32 +56,32 @@ The libtiff package contains a library of functions for manipulating TIFF
 format for bitmapped images. TIFF files usually end in the .tif extension
 and they are often quite large.
 
-%package	progs
+%package progs
 Summary:	Binaries needed to manipulate TIFF format image files
 Group:		Graphics
 
-%description	progs
+%description progs
 This package provides binaries needed to manipulate TIFF format image files.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	A library of functions for manipulating TIFF format image files
 Group:		System/Libraries
 
-%description -n	%{libname}
+%description -n %{libname}
 The libtiff package contains a library of functions for manipulating TIFF
 (Tagged Image File Format) image format files. TIFF is a widely used file
 format for bitmapped images. TIFF files usually end in the .tif extension
 and they are often quite large.
 
-%package -n	%{libxx}
+%package -n %{libxx}
 Summary:	A library of functions for manipulating TIFF format image files
 Group:		System/Libraries
 Conflicts:	%{_lib}tiff5 < 4.0.3-2
 
-%description -n	%{libxx}
+%description -n %{libxx}
 This package contains a shared library for %{name}.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Development tools for programs which will use the libtiff library
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
@@ -92,38 +92,38 @@ Requires:	pkgconfig(liblzma)
 Requires:	pkgconfig(libjpeg)
 Requires:	pkgconfig(zlib)
 
-%description -n	%{devname}
+%description -n %{devname}
 This package contains the header files and .so libraries for developing
 programs which will manipulate TIFF format image files using the libtiff
 library.
 
 %if %{with compat32}
-%package -n	%{lib32name}
+%package -n %{lib32name}
 Summary:	A library of functions for manipulating TIFF format image files (32-bit)
 Group:		System/Libraries
 
-%description -n	%{lib32name}
+%description -n %{lib32name}
 The libtiff package contains a library of functions for manipulating TIFF
 (Tagged Image File Format) image format files. TIFF is a widely used file
 format for bitmapped images. TIFF files usually end in the .tif extension
 and they are often quite large.
 
-%package -n	%{lib32xx}
+%package -n %{lib32xx}
 Summary:	A library of functions for manipulating TIFF format image files (32-bit)
 Group:		System/Libraries
 Conflicts:	%{_lib}tiff5 < 4.0.3-2
 
-%description -n	%{lib32xx}
+%description -n %{lib32xx}
 This package contains a shared library for %{name}.
 
-%package -n	%{dev32name}
+%package -n %{dev32name}
 Summary:	Development tools for programs which will use the libtiff library (32-bit)
 Group:		Development/C
 Requires:	%{devname} = %{version}-%{release}
 Requires:	%{lib32name} = %{version}-%{release}
 Requires:	%{lib32xx} = %{version}-%{release}
 
-%description -n	%{dev32name}
+%description -n %{dev32name}
 This package contains the header files and .so libraries for developing
 programs which will manipulate TIFF format image files using the libtiff
 library.
@@ -155,18 +155,11 @@ cd ..
 mkdir buildnative
 cd buildnative
 
-export LDFLAGS="%{ldflags}"
-export CFLAGS="%{optflags} -fno-strict-aliasing"
-export CXXFLAGS="%{optflags}"
-
 %if %{with pgo}
-export LLVM_PROFILE_FILE=%{name}-%p.profile.d
 export LD_LIBRARY_PATH="$(pwd)"
-CFLAGS="%{optflags} -fprofile-instr-generate" \
-CXXFLAGS="%{optflags} -fprofile-instr-generate" \
-FFLAGS="$CFLAGS_PGO" \
-FCFLAGS="$CFLAGS_PGO" \
-LDFLAGS="%{ldflags} -fprofile-instr-generate" \
+CFLAGS="%{optflags} -fprofile-generate" \
+CXXFLAGS="%{optflags} -fprofile-generate" \
+LDFLAGS="%{build_ldflags} -fprofile-generate" \
 %configure \
 	--disable-static \
 	--enable-ld-version-script
@@ -175,14 +168,14 @@ LDFLAGS="%{ldflags} -fprofile-instr-generate" \
 make check
 
 unset LD_LIBRARY_PATH
-unset LLVM_PROFILE_FILE
-llvm-profdata merge --output=%{name}.profile *.profile.d
-
+llvm-profdata merge --output=%{name}-llvm.profdata *.profraw
+PROFDATA="$(realpath %{name}-llvm.profdata)"
+rm -f *.profraw
 make clean
 
-CFLAGS="%{optflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
-CXXFLAGS="%{optflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
-LDFLAGS="%{ldflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
+CFLAGS="%{optflags} -fprofile-use=$PROFDATA" \
+CXXFLAGS="%{optflags} -fprofile-use=$PROFDATA" \
+LDFLAGS="%{build_ldflags} -fprofile-use=$PROFDATA" \
 %endif
 %configure \
 	--disable-static \
@@ -204,7 +197,7 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 
 %files progs
 %{_bindir}/*
-%{_mandir}/man1/*
+%doc %{_mandir}/man1/*
 
 %files -n %{libname}
 %{_libdir}/libtiff.so.%{major}*
@@ -217,7 +210,7 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 %{_includedir}/*.h*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
-%{_mandir}/man3/*
+%doc %{_mandir}/man3/*
 
 %if %{with compat32}
 %files -n %{lib32name}
