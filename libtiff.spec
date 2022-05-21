@@ -17,12 +17,12 @@
 # (tpg) enable PGO build
 %bcond_without pgo
 
-#define beta rc1
+%define beta rc1
 
 Summary:	A library of functions for manipulating TIFF format image files
 Name:		libtiff
-Version:	4.3.0
-Release:	%{?beta:0.%{beta}.}3
+Version:	4.4.0
+Release:	%{?beta:0.%{beta}.}1
 License:	BSD-like
 Group:		System/Libraries
 Url:		http://www.remotesensing.org/libtiff/
