@@ -19,8 +19,8 @@
 
 #define beta rc1
 
-Summary:	A library of functions for manipulating TIFF format image files
-Name:		libtiff
+Summary:	Old version of libtiff, providing the libtiff.so.5 ABI
+Name:		libtiff4.4
 Version:	4.4.0
 Release:	%{?beta:0.%{beta}.}1
 License:	BSD-like
@@ -42,6 +42,7 @@ BuildRequires:	pkgconfig(libwebp)
 %endif
 BuildRequires:	pkgconfig(zlib)
 %if %{with compat32}
+BuildRequires:	libc6
 BuildRequires:	devel(libjpeg)
 BuildRequires:	devel(libzstd)
 BuildRequires:	devel(liblzma)
@@ -51,20 +52,15 @@ BuildRequires:	devel(libGLU)
 %endif
 
 %description
+Old version of libtiff, providing the libtiff.so.5 ABI
+
 The libtiff package contains a library of functions for manipulating TIFF
 (Tagged Image File Format) image format files. TIFF is a widely used file
 format for bitmapped images. TIFF files usually end in the .tif extension
 and they are often quite large.
 
-%package progs
-Summary:	Binaries needed to manipulate TIFF format image files
-Group:		Graphics
-
-%description progs
-This package provides binaries needed to manipulate TIFF format image files.
-
 %package -n %{libname}
-Summary:	A library of functions for manipulating TIFF format image files
+Summary:	(Old version for compatibility) library of functions for manipulating TIFF format image files
 Group:		System/Libraries
 
 %description -n %{libname}
@@ -74,59 +70,35 @@ format for bitmapped images. TIFF files usually end in the .tif extension
 and they are often quite large.
 
 %package -n %{libxx}
-Summary:	A library of functions for manipulating TIFF format image files
+Summary:	(Old version for compatibility) library of functions for manipulating TIFF format image files
 Group:		System/Libraries
 Conflicts:	%{_lib}tiff5 < 4.0.3-2
 
 %description -n %{libxx}
 This package contains a shared library for %{name}.
 
-%package -n %{devname}
-Summary:	Development tools for programs which will use the libtiff library
-Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libxx} = %{version}-%{release}
-Provides:	tiff-devel = %{version}-%{release}
-Requires:	pkgconfig(libzstd)
-Requires:	pkgconfig(liblzma)
-Requires:	pkgconfig(libjpeg)
-Requires:	pkgconfig(zlib)
-
-%description -n %{devname}
-This package contains the header files and .so libraries for developing
-programs which will manipulate TIFF format image files using the libtiff
-library.
-
 %if %{with compat32}
 %package -n %{lib32name}
-Summary:	A library of functions for manipulating TIFF format image files (32-bit)
+Summary:	(Old version for compatibility) A library of functions for manipulating TIFF format image files (32-bit)
 Group:		System/Libraries
 
 %description -n %{lib32name}
+Old version of libtiff providing the libtiff.so.5 ABI
+
 The libtiff package contains a library of functions for manipulating TIFF
 (Tagged Image File Format) image format files. TIFF is a widely used file
 format for bitmapped images. TIFF files usually end in the .tif extension
 and they are often quite large.
 
 %package -n %{lib32xx}
-Summary:	A library of functions for manipulating TIFF format image files (32-bit)
+Summary:	(Old version for compatibility) A library of functions for manipulating TIFF format image files (32-bit)
 Group:		System/Libraries
 Conflicts:	%{_lib}tiff5 < 4.0.3-2
 
 %description -n %{lib32xx}
+Old version of libtiff providing the libtiff.so.5 ABI
+
 This package contains a shared library for %{name}.
-
-%package -n %{dev32name}
-Summary:	Development tools for programs which will use the libtiff library (32-bit)
-Group:		Development/C
-Requires:	%{devname} = %{version}-%{release}
-Requires:	%{lib32name} = %{version}-%{release}
-Requires:	%{lib32xx} = %{version}-%{release}
-
-%description -n %{dev32name}
-This package contains the header files and .so libraries for developing
-programs which will manipulate TIFF format image files using the libtiff
-library.
 %endif
 
 %prep
@@ -193,12 +165,20 @@ rm -rf installed_docs
 %endif
 %make_install -C buildnative
 
-install -m0644 libtiff/tiffiop.h %{buildroot}%{_includedir}/
-install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
+# Drop -devel files and other bits we don't need
+# for a compat package
+rm -rf \
+	%{buildroot}%{_libdir}/*.so \
+	%{buildroot}%{_includedir} \
+	%{buildroot}%{_libdir}/pkgconfig \
+	%{buildroot}%{_bindir} \
+	%{buildroot}%{_mandir} \
+	%{buildroot}%{_docdir} \
+%if %{with compat32}
+	%{buildroot}%{_prefix}/lib/*.so \
+	%{buildroot}%{_prefix}/lib/pkgconfig
+%endif
 
-%files progs
-%{_bindir}/*
-%doc %{_mandir}/man1/*
 
 %files -n %{libname}
 %{_libdir}/libtiff.so.%{major}*
@@ -206,21 +186,10 @@ install -m0644 libtiff/tif_dir.h %{buildroot}%{_includedir}/
 %files -n %{libxx}
 %{_libdir}/libtiffxx.so.%{major}*
 
-%files -n %{devname}
-%doc %{_docdir}/tiff-%{version}
-%{_includedir}/*.h*
-%{_libdir}/*.so
-%{_libdir}/pkgconfig/*.pc
-%doc %{_mandir}/man3/*
-
 %if %{with compat32}
 %files -n %{lib32name}
 %{_prefix}/lib/libtiff.so.%{major}*
 
 %files -n %{lib32xx}
 %{_prefix}/lib/libtiffxx.so.%{major}*
-
-%files -n %{dev32name}
-%{_prefix}/lib/*.so
-%{_prefix}/lib/pkgconfig/*.pc
 %endif
