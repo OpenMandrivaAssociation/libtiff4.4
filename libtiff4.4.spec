@@ -25,7 +25,7 @@ Version:	4.4.0
 Release:	%{?beta:0.%{beta}.}1
 License:	BSD-like
 Group:		System/Libraries
-Url:		http://www.remotesensing.org/libtiff/
+Url:		https://www.remotesensing.org/libtiff/
 Source0:	http://download.osgeo.org/libtiff/tiff-%{version}%{?beta:%{beta}}.tar.gz
 Patch1:		tiff-3.9.1-no_contrib.diff
 BuildRequires:	libtool
